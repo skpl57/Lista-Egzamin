@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,8 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView listaZadan;
     private EditText opisZadania;
     private Button dodajBtn;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> arrayList;
+    private ArrayAdapter<Todo> arrayAdapter;
+    private ArrayList<Todo> arrayList;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
         listaZadan = findViewById(R.id.lista);
         opisZadania = findViewById(R.id.opisText);
         dodajBtn = findViewById(R.id.dodajBtn);
+        spinner = findViewById(R.id.spinner);
 
         arrayList = new ArrayList<>();
-        arrayList.add("Wyjście do kina");
-        arrayList.add("Nauczyć się robienia list w mobilnej");
-        arrayList.add("Pomyśleć ciepło o projekcie");
+        arrayList.add(new Todo("Wyjście do kina", (byte) 1));
+        arrayList.add(new Todo("Pomyśleć ciepło o projekcie", (byte) 0));
+        arrayList.add(new Todo("Bajlando w domu", (byte) 2));
 
         arrayAdapter = new ArrayAdapter<>(
                 this,
@@ -55,45 +58,61 @@ public class MainActivity extends AppCompatActivity {
         listaZadan.setAdapter(arrayAdapter);
 
 
+        spinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                }
+        );
+
+
         dodajBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String rzeczDoZrobienia = opisZadania.getText().toString();
-                        arrayList.add(rzeczDoZrobienia);
+                        byte piorytet = (byte) spinner.getSelectedItemPosition();
+                        arrayList.add(new Todo(rzeczDoZrobienia, piorytet));
                         arrayAdapter.notifyDataSetChanged();
                         opisZadania.setText("");
                     }
                 }
         );
 
-        listaZadan.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        TextView textView = (TextView) view;
-                        if(textView.getPaintFlags() == Paint.STRIKE_THRU_TEXT_FLAG){
-                            textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
-                            view.setBackgroundColor(Color.WHITE);
-                        }
-                        else{
-                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                            view.setBackgroundColor(Color.GRAY);
-                        }
-                    }
-                }
-        );
-
-        listaZadan.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        arrayList.remove(i);
-                        arrayAdapter.notifyDataSetChanged();
-                        return false;
-                    }
-                }
-        );
+//        listaZadan.setOnItemClickListener(
+//                new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                        TextView textView = (TextView) view;
+//                        if(textView.getPaintFlags() == Paint.STRIKE_THRU_TEXT_FLAG){
+//                            textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
+//                            view.setBackgroundColor(Color.WHITE);
+//                        }
+//                        else{
+//                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                            view.setBackgroundColor(Color.GRAY);
+//                        }
+//                    }
+//                }
+//        );
+//
+//        listaZadan.setOnItemLongClickListener(
+//                new AdapterView.OnItemLongClickListener() {
+//                    @Override
+//                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                        arrayList.remove(i);
+//                        arrayAdapter.notifyDataSetChanged();
+//                        return false;
+//                    }
+//                }
+//        );
 
     }
 }
