@@ -1,5 +1,7 @@
 package com.example.egzaminlistask;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,7 +71,26 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        TextView textView = (TextView) view;
+                        if(textView.getPaintFlags() == Paint.STRIKE_THRU_TEXT_FLAG){
+                            textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
+                            view.setBackgroundColor(Color.WHITE);
+                        }
+                        else{
+                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            view.setBackgroundColor(Color.GRAY);
+                        }
+                    }
+                }
+        );
 
+        listaZadan.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        arrayList.remove(i);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
                     }
                 }
         );
