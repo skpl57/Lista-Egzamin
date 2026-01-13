@@ -78,30 +78,32 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String rzeczDoZrobienia = opisZadania.getText().toString();
-                        byte piorytet = (byte) spinner.getSelectedItemPosition();
-                        arrayList.add(new Todo(rzeczDoZrobienia, piorytet));
+                        byte priorytet = (byte) spinner.getSelectedItemPosition();
+                        arrayList.add(new Todo(rzeczDoZrobienia, priorytet));
                         arrayAdapter.notifyDataSetChanged();
                         opisZadania.setText("");
                     }
                 }
         );
 
-//        listaZadan.setOnItemClickListener(
-//                new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                        TextView textView = (TextView) view;
-//                        if(textView.getPaintFlags() == Paint.STRIKE_THRU_TEXT_FLAG){
-//                            textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
-//                            view.setBackgroundColor(Color.WHITE);
-//                        }
-//                        else{
-//                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//                            view.setBackgroundColor(Color.GRAY);
-//                        }
-//                    }
-//                }
-//        );
+        listaZadan.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        TextView textView = (TextView) view;
+                        if(arrayList.get(i).isCzyWykonane()){
+                            arrayList.get(i).setCzyWykonane(false);
+                            textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
+                            view.setBackgroundColor(Color.WHITE);
+                        }
+                        else{
+                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            view.setBackgroundColor(Color.GRAY);
+                            arrayList.get(i).setCzyWykonane(true);
+                        }
+                    }
+                }
+        );
 //
 //        listaZadan.setOnItemLongClickListener(
 //                new AdapterView.OnItemLongClickListener() {
