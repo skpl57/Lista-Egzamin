@@ -2,6 +2,7 @@ package com.example.egzaminlistask;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,26 @@ public class MainActivity extends AppCompatActivity {
         listaZadan.setAdapter(arrayAdapter);
 
 
+        dodajBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String rzeczDoZrobienia = opisZadania.getText().toString();
+                        arrayList.add(rzeczDoZrobienia);
+                        arrayAdapter.notifyDataSetChanged();
+                        opisZadania.setText("");
+                    }
+                }
+        );
 
+        listaZadan.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+                }
+        );
 
     }
 }
