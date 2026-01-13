@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="Name" />
+            android:hint="Nowy element" />
 
         <Button
             android:id="@+id/dodajBtn"
